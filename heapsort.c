@@ -2,26 +2,35 @@
 #include<stdlib.h>
 #include<time.h>
 #include <sys/time.h>
-
-#define SIZEOFVETOR 1000000000
-#define PERCENTAGEM 90
+#define SIZEOFVETOR 10000000
+#define PERCENTAGEM 0
+#define ISPRINT 0
 
 void imprime_vetor(int *A) {
-  for( int i = 1; i <=SIZEOFVETOR; i++) {
-    printf(" %d ", A[i]);
+  printf("\n");
+  printf("[");
+  for(int i = 1; i <= SIZEOFVETOR; i++) {
+    if (SIZEOFVETOR > i) {
+      printf("%d, ", A[i]);
+    }else if(SIZEOFVETOR == i) {
+      printf("%d", A[i]);
+    }  
   }
+   printf("]");
+   printf("\n");
+
 }
 
 
 void insere_valor(int *A) {
   int numero_randomico;
   srand(time(NULL));
-  int repeticao = SIZEOFVETOR*(PERCENTAGEM/100);
-
+  int repeticao = (SIZEOFVETOR*PERCENTAGEM);
+  
   for(int i = 1; i <= SIZEOFVETOR; i++) {
-    numero_randomico = (rand() % 100);
+    numero_randomico = (rand() % SIZEOFVETOR);
     if(i <= repeticao) {
-    	numero_randomico = 10;
+     	numero_randomico = 10;
     } 
     A[i] = numero_randomico;
   }
@@ -92,13 +101,16 @@ int main() {
   inicio = time(NULL);
   A = (int*)calloc(SIZEOFVETOR, sizeof(int));
   insere_valor(A);
-
-  //printf("\nVETOR ORIGINAL:  ");
-  //imprime_vetor(A);
+  if(ISPRINT == 1) {	
+    printf("\nVETOR ORIGINAL:  ");
+    imprime_vetor(A);
+  }
 
   HEAPSORT(A);
-  //printf("\nVETOR ORDENADO:  ");
-  //imprime_vetor(A);
+  if(ISPRINT == 1) {	
+    printf("\nVETOR PROCESSADO:  ");
+    imprime_vetor(A);
+  }
   fim = time(NULL);
   printf("\n\n %f \n\n ", difftime(fim, inicio) );	
   return 1;	
